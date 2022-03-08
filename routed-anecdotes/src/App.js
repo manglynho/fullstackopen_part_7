@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useField } from './hooks'
 
 import {
   Routes,
@@ -67,39 +68,58 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
+  
+  /*const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const [info, setInfo] = useState('')*/
+  
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
+  
   const navigate = useNavigate()
 
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     })
     navigate('/')
   }
 
+  const resetInputFields = (e) => {
+    e.preventDefault()
+    content.value = ''
+    author.value = ''
+    info.value = ''
+    content.onChange(e)
+    author.onChange(e)
+    info.onChange(e)
+  };
+
+
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input {...content} />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...author} />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input {...info} />
         </div>
         <button>create</button>
+        <button onClick={resetInputFields}>Reset</button>      
       </form>
     </div>
   )
@@ -137,6 +157,7 @@ const App = () => {
   
   const [notification, setNotification] = useState('')
   //const [anecdote, setAnecdote] = useState(null)
+
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
