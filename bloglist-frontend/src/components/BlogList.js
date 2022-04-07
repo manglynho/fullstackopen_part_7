@@ -1,7 +1,7 @@
 import React from 'react'
 //import { useDispatch, useSelector } from 'react-redux'
 import { connect } from 'react-redux'
-import { doLike, removeBlog } from '../reducers/blogReducer'
+import { removeBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Blog from '../components/Blog'
 
@@ -12,7 +12,6 @@ const BlogList = (props) => {
         <Blog
           key={blog.id}
           blog={blog}
-          plusLike={ () => props.doLike(blog.id, blog) }
           byeBlog ={ () => {
             if (window.confirm(`Delete ${blog.title} ?`)) {
               props.removeBlog(blog)
@@ -39,7 +38,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {  doLike, removeBlog , setNotification }
+const mapDispatchToProps = {  removeBlog , setNotification }
 
 //export default AnecdoteList
 const ConnectedBlogList = connect(mapStateToProps,mapDispatchToProps)(BlogList)

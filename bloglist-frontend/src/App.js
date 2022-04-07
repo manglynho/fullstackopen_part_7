@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import BlogList from './components/BlogList'
+import BlogView from './components/BlogView'
 import UserList from './components/UserList'
 import User from './components/User'
 import BlogForm from './components/BlogForm'
@@ -76,10 +77,6 @@ const App = () => {
           {loginForm()}
         </div> :
         <div>
-          <p>{loggedUser.name} logged in
-            <button id="logout-btn" onClick={() => logout()}>
-      Logout
-            </button></p>
           <h3>Add a new</h3>
           {blogForm(addBlog)}
           <hr/>
@@ -88,31 +85,57 @@ const App = () => {
     )}
 
   const users = useSelector(state => state.users)
+  const blogs = useSelector(state => state.blogs)
 
   const match = useMatch('/users/:id')
   const user = match
     ? users.find(user => user.id === match.params.id)
     : null
-  console.log(users, user, match)
+
+  const match1 = useMatch('/blogs/:id')
+  const blog = match1
+    ? blogs.find(blog => blog.id === match1.params.id)
+    : null
+
+  const LoginStatus = () => {
+    return(
+      loggedUser === null ?
+        <div>
+        </div> :
+        <div>
+          {loggedUser.name} logged in
+          <button id="logout-btn" onClick={() => logout()}>
+      Logout
+          </button>
+        </div>
+    )
+  }
+  const Menu = () => {
+    const padding = {
+      paddingRight: 5
+    }
+    return (
+      <div>
+        <Link style={padding} to="/">Blogs</Link>
+        <Link style={padding} to="/users">Users</Link>
+        <LoginStatus/>
+      </div>
+    )
+  }
 
   return (
     <div>
+      <Menu/>
       <h2>Blogs App</h2>
-      <div>
-        <Link to="/">Home</Link>
-        <Link to="/users">Users</Link>
-      </div>
       <Notification/>
       <Routes>
+        <Route path="/blogs/:id" element={<BlogView blog={blog}/>}/>
         <Route path="/users/:id" element={<User user={user}/>}/>
         <Route path="/users" element={<UserList users={users} />}>
         </Route>
         <Route path="/" element={<HomeContent />}>
         </Route>
       </Routes>
-      <div>
-        <i>Blogs App 2022</i>
-      </div>
     </div>
   )
 }

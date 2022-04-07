@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-//import reactDom from 'react-dom'
+import { Link } from 'react-router-dom'
 
-const Blog = ({ blog, plusLike, byeBlog }) => {
-  const [advPanelVisible, setAdvPanelVisible] = useState(false)
-
+const Blog = ({ blog,  byeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -20,54 +18,16 @@ const Blog = ({ blog, plusLike, byeBlog }) => {
     borderRadius: '10%'
   }
 
-  const hideWhenVisible = { display: advPanelVisible ? 'none' : '' }
-  const showWhenVisible = { display: advPanelVisible ? '' : 'none' }
-
-
-  const advancedBlogPanelButtons = () => {
-    return (
-      <span>
-        <span style={hideWhenVisible}>
-          <button onClick={() => setAdvPanelVisible(true)}>View</button>
-        </span>
-        <span style={showWhenVisible}>
-          <button onClick={() => setAdvPanelVisible(false)}>Hide</button>
-        </span>
-      </span>
-    )
-  }
-
-  const advancedBlogPanel = () => {
-    return (
-      <div>
-        <div style={showWhenVisible} className='moreDataPanel'>
-          <div>
-            {blog.url}
-          </div>
-          <div>
-            Likes:<span className='likesValue'>{blog.likes}</span>
-            <button className='likeBtn' onClick={plusLike}>Like</button>
-          </div>
-          <div>
-            {blog.user.name}
-          </div>
-          <button className='removeBtn' style={removeBtnStyle} onClick={byeBlog}>Remove</button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className='blog_element' style={blogStyle}>
       <div>
-        {blog.title} {blog.author} {advancedBlogPanelButtons()}
-        {advancedBlogPanel()}
+        <Link to={`/blogs/${blog.id}`}> {blog.title} {blog.author} </Link>
+        <button className='removeBtn' style={removeBtnStyle} onClick={byeBlog}>Remove</button>
       </div>
     </div>
   )}
 
 Blog.propTypes = {
-  plusLike: PropTypes.func.isRequired,
   byeBlog: PropTypes.func.isRequired,
   blog: PropTypes.object.isRequired
 }
