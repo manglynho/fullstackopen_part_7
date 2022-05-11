@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { Form, Button } from 'react-bootstrap'
 
 const BlogForm = ({ createBlog }) => {
   const [newBlogTittle, setNewBlogTittle] = useState('')
@@ -29,18 +30,37 @@ const BlogForm = ({ createBlog }) => {
   }
 
   return (
-    <form onSubmit={addBlog}>
-      <div>
-          Blog:<input id='title' value={newBlogTittle} onChange={handleBlogTittleChange} />
-      </div>
-      <div>
-          Author:<input id='author' value={newBlogAuthor} onChange={handleBlogAuthorChange} />
-      </div>
-      <div>
-          Url:<input id='url' value={newBlogUrl} onChange={handleBlogUrlChange} />
-      </div>
-      <button id='add-blog-button' type="submit">save</button>
-    </form>
+    <Form onSubmit={addBlog}>
+      <Form.Group>
+        <Form.Label>Blog:</Form.Label>
+        <Form.Control
+          type="text"
+          name='title'
+          id='title'
+          value={newBlogTittle}
+          onChange={handleBlogTittleChange}
+        />
+        <Form.Label>Author:</Form.Label>
+        <Form.Control
+          type="text"
+          name='author'
+          id='author'
+          value={newBlogAuthor}
+          onChange={handleBlogAuthorChange}
+        />
+        <Form.Label>Url:</Form.Label>
+        <Form.Control
+          type="text"
+          name='url'
+          id='url'
+          value={newBlogUrl}
+          onChange={handleBlogUrlChange}
+        />
+        <Button id='add-blog-button' variant="primary" type="submit">
+            save
+        </Button>
+      </Form.Group>
+    </Form>
   )
 }
 

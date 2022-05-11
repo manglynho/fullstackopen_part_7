@@ -1,6 +1,7 @@
 import React from 'react'
 //import { useSelector } from 'react-redux'
 import { connect } from 'react-redux'
+import { Alert } from 'react-bootstrap'
 
 const Notification = (props) => {
   //const notification = useSelector( state => state.notification)
@@ -12,11 +13,16 @@ const Notification = (props) => {
     padding: 10,
     borderWidth: 1
   }*/
+  let alertStyle = props.style
+
+  if(props.style === 'error'){
+    alertStyle = 'danger'
+  }
 
   return (
-    <div className={props.style}>
+    <Alert variant={alertStyle}>
       {props.notification}
-    </div>
+    </Alert>
   )
 }
 

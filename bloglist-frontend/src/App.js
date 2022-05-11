@@ -14,6 +14,8 @@ import { initializeBlogs , createBlog } from './reducers/blogReducer'
 import { check_auth, doLogin, doLogout } from './reducers/authReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { Routes, Route, Link, useMatch } from 'react-router-dom'
+import { Button, Navbar, Nav } from 'react-bootstrap'
+
 
 const App = () => {
   const blogFormRef = useRef()
@@ -104,9 +106,9 @@ const App = () => {
         </div> :
         <div>
           {loggedUser.name} logged in
-          <button id="logout-btn" onClick={() => logout()}>
-      Logout
-          </button>
+          <Button variant="primary" id="logout-btn" onClick={() => logout()}>
+          Logout
+          </Button>
         </div>
     )
   }
@@ -115,16 +117,25 @@ const App = () => {
       paddingRight: 5
     }
     return (
-      <div>
-        <Link style={padding} to="/">Blogs</Link>
-        <Link style={padding} to="/users">Users</Link>
-        <LoginStatus/>
-      </div>
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="#" as="span">
+              <Link style={padding} to="/">Blogs</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link style={padding} to="/users">Users</Link>
+            </Nav.Link>
+          </Nav>
+          <LoginStatus />
+        </Navbar.Collapse>
+      </Navbar>
     )
   }
 
   return (
-    <div>
+    <div className="container">
       <Menu/>
       <h2>Blogs App</h2>
       <Notification/>

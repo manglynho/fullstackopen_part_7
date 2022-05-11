@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
 
 const Blog = ({ blog,  byeBlog }) => {
   const blogStyle = {
@@ -11,18 +12,13 @@ const Blog = ({ blog,  byeBlog }) => {
     marginBottom: 5
   }
 
-  const removeBtnStyle ={
-    color: 'white',
-    backgroundColor: 'red',
-    borderColor:'red',
-    borderRadius: '10%'
-  }
-
   return (
     <div className='blog_element' style={blogStyle}>
       <div>
         <Link to={`/blogs/${blog.id}`}> {blog.title} {blog.author} </Link>
-        <button className='removeBtn' style={removeBtnStyle} onClick={byeBlog}>Remove</button>
+        <Button className='removeBtn' onClick={byeBlog} variant="danger">
+        Remove
+        </Button>
       </div>
     </div>
   )}

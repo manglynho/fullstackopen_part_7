@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { doLike, doComment } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
+import { Form, Button } from 'react-bootstrap'
 
 
 const BlogView = ( { blog } ) => {
@@ -32,18 +33,29 @@ const BlogView = ( { blog } ) => {
       </a>
       <div>
         Likes: <span className='likesValue'>{blog.likes}</span>
-        <button className='likeBtn' onClick={ () => plusLike(blog.id, blog) }>Like</button>
+        <Button className='likeBtn' onClick={ () => plusLike(blog.id, blog) } variant="info">
+          Like
+        </Button>
       </div>
       <div>
         Added by : {blog.user.name}
       </div>
       <h4>Comments</h4>
-      <form onSubmit={addBlogComment}>
-        <div>
-          <input id='title' value={newBlogComment} onChange={handleBlogCommentChange} />
-          <button id='add-blog-comment-button' type="submit">save</button>
-        </div>
-      </form>
+      <Form onSubmit={addBlogComment}>
+        <Form.Group>
+          <Form.Label>Comment:</Form.Label>
+          <Form.Control
+            type="text"
+            id='comment'
+            tittle='comment'
+            value={newBlogComment}
+            onChange={handleBlogCommentChange}
+          />
+          <Button variant="primary" type="submit">
+            save
+          </Button>
+        </Form.Group>
+      </Form>
       <ul>
         {blog.comments.map((comm, index) =>
           <li key={index}>
